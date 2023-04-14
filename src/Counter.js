@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 const Counter = () => {
   const [tableData, setTableData] = useState([]);
+  const [mainCount, setMainCount] = useState(0);
+  const [ip, setIP] = useState("");
 
+  const getData = async () => {
+    const res = await axios.get("https://api.ipify.org/?format=json");
+    console.log(res.data);
+    setIP(res.data.ip);
+  };
   const processItems = (data) => {
     let totalCount = 0;
     data.forEach((e) => {
       totalCount += e.count;
     });
+    console.log("jooo");
+    setMainCount(mainCount);
     data.push({ name: "main", count: totalCount });
+
     data.sort((a, b) => b.count - a.count);
     setTableData(data);
   };
 
   async function incrementCounter() {
-    const res = await fetch("http://ip-api.com/json/?fields=61439");
+    const res = await fetch(`http://ip-api.com/json/${ip}`);
     if (res.status === 200) {
       const result = await res.json();
       const { city, country } = result;
@@ -60,10 +70,12 @@ const Counter = () => {
     };
 
     fetchInitialData();
+    getData();
   }, []);
 
   return (
     <div>
+      <div>hw{ip}</div>
       <button onClick={incrementCounter}>Counter</button>
 
       <table>
