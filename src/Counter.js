@@ -24,7 +24,7 @@ const Counter = () => {
   };
 
   async function incrementCounter() {
-    const res = await fetch(`http://ip-api.com/json/${ip}`);
+    const res = await fetch(`https://ipapi.co/${ip}/json/`);
     if (res.status === 200) {
       const result = await res.json();
       const { city, country } = result;
