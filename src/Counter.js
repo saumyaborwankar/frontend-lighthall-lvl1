@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 const Counter = () => {
   const [tableData, setTableData] = useState([]);
-  const [mainCount, setMainCount] = useState(0);
+  const [mainCount, setMainCount] = useState();
   const [ip, setIP] = useState("");
 
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
-    console.log(res.data);
+    // console.log(res.data);
     setIP(res.data.ip);
   };
   const processItems = (data) => {
@@ -15,11 +15,11 @@ const Counter = () => {
     data.forEach((e) => {
       totalCount += e.count;
     });
-    console.log("jooo");
-    setMainCount(mainCount);
-    data.push({ name: "main", count: totalCount });
-
+    // console.log("jooo");
+    setMainCount(totalCount);
+    // console.log("maincount", mainCount);
     data.sort((a, b) => b.count - a.count);
+    data.unshift({ name: "main", count: totalCount });
     setTableData(data);
   };
 
@@ -61,7 +61,7 @@ const Counter = () => {
       axios
         .get("https://backend-lightall.herokuapp.com/getTableData")
         .then((res) => {
-          console.log(res.data.message);
+          // console.log(res.data.message);
           const listItems = res.data.message.map((item) => {
             return { name: item.name, count: item.count };
           });
@@ -75,7 +75,7 @@ const Counter = () => {
 
   return (
     <div>
-      <div>hw{ip}</div>
+      <div>{mainCount}</div>
       <button onClick={incrementCounter}>Counter</button>
 
       <table>
