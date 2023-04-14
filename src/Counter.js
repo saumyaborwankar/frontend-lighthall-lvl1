@@ -106,6 +106,12 @@ const Counter = () => {
           })}
         </tbody>
       </table>
+      <p>
+        The backend is hosted on Heroku and frontend is hosted on Netlify.
+        Adding up the latency between these two servers along with the location
+        api that I have used there might be some delay in the registering of the
+        clicks in far away locations.
+      </p>
     </div>
   );
 };
